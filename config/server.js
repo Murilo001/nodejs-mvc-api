@@ -1,3 +1,8 @@
+/**
+ * Base em MVC criada para quaisquer outros projetos.
+ * 
+ * @author Murilo de Oliveira Silva.
+ */
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -43,7 +48,7 @@ app.get('/usuario/:userId', (req, res) => {
 app.post('/usuario', (req, res) => {
     usuarioController.adicionarUsuario(req.body, (err) => {
         if (err) {
-            res.send(`Erro ao cadastrar o usuário: ${req.body.nome}`);
+            res.send(`Erro ao cadastrar o usuário: ${req.body.nome}. Problema: ${err}`);
 
         } else {
             res.send(`Usuário ${req.body.nome} cadastrado com sucesso.`);
