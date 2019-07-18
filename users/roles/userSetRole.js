@@ -23,6 +23,10 @@ const verificaRegraNegocio = (dadosUsuario) => {
     let dataAtual = moment(new Date(), "DD/MM/YYYY");
     if (dataAtual.diff(dataNascimento, 'years') < 18)
         return 'Apostas só são permitidas para pessoas acima de 18 anos.'
+
+    if (dadosUsuario.ativo != '1' && dadosUsuario.ativo != '0')
+        return 'Campo Ativo preenchido incorretamente, informe 0 para inativo e 1 para ativo.'
+
     return null;
 }
 
@@ -32,7 +36,7 @@ const verificaPreenchimentoObrigatorio = (dadosUsuario) => {
     if (util.isEmpty(dadosUsuario.nome))
         return 'Nome não fornecido.';
     if (util.isEmpty(dadosUsuario.idade))
-        return 'Idade não fornecido.';
+        return 'Idade não fornecida.';
     return null;
 }
 
