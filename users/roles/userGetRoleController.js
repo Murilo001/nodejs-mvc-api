@@ -2,26 +2,15 @@
 const util = require('../../common/util');
 /** End Common Functions */
 
-const validate = (dadosUsuario) => {
-    let preenchimento = verificaPreenchimentoObrigatorio(dadosUsuario);
-    if (preenchimento)
-        return preenchimento;
-    let regra = verificaRegraNegocio(dadosUsuario);
+const validate = (id) => {
+    let regra = verificaRegraNegocio(id);
     if (regra)
         return regra;
     return null;
 };
 
-const verificaRegraNegocio = (dadosUsuario) => {
+const verificaRegraNegocio = (id) => {
     /** Verificar se é um número válido. */
-    return null;
-};
-
-const verificaPreenchimentoObrigatorio = (dadosUsuario) => {
-    if (util.isEmpty(dadosUsuario))
-        return 'Dados não fornecidos.';
-    if (util.isEmpty(dadosUsuario.id))
-        return 'Nome não fornecido.';
     return null;
 };
 

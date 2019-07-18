@@ -101,9 +101,18 @@ const alterarUsuario = (id, dadosUsuario, callback) => {
  * @returns {Error}  500 - Dados inválidos.
  */
 const deletarUsuario = (id, callback) => {
-    deleteUserModel(id, (err, data) => {
-        callback(err, data);
-    });
+    try {
+        let invalid = userDeleteRole(id);
+        if (invalid != null) {
+            return invalid;
+        } else {
+            deleteUserModel(id, (data) => {
+                callback(data);
+            });
+        }
+    } catch (er) {
+        callback(er);
+    }
 };
 
 module.exports = {
