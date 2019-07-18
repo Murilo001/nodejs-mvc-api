@@ -15,11 +15,10 @@ const userRoutes = (router) => {
 
     // FUNCIONANDO - GET BY ID
     router.get('/usuario/:userId', (req, res) => {
-        usuarioController.listarUsuariosPorId(req.params.userId, (data) => {
-            console.log(data);
-            if (!data) {
+        usuarioController.listarUsuariosPorId(req.params.userId, (data, err) => {
+            if (err) {
                 res.status(500);
-                res.send('error');
+                res.send('error ' + err);
             } else {
                 res.send(data);
             }

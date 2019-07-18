@@ -27,7 +27,7 @@ const adicionarUsuario = (dadosUsuario, callback) => {
     try {
         let invalid = userSetRole(dadosUsuario);
         if (invalid != null) {
-            return callback(invalid)
+            return callback(invalid);
         } else {
             setUserModel(dadosUsuario, (data) => {
                 callback(data);
@@ -36,7 +36,7 @@ const adicionarUsuario = (dadosUsuario, callback) => {
     } catch (er) {
         callback(er);
     }
-}
+};
 
 /**
  * Listar usuário por ID.
@@ -47,18 +47,13 @@ const adicionarUsuario = (dadosUsuario, callback) => {
  */
 const listarUsuariosPorId = (id, callback) => {
     try {
-        let invalid = userGetRole(id);
-        if (invalid != null) {
-            return invalid
-        } else {
-            getUserModel(id, (data) => {
-                callback(data);
-            });
-        }
+        getUserModel(id, (data) => {
+            callback(data);
+        });
     } catch (er) {
-        callback(er);
+        callback(undefined, er);
     }
-}
+};
 
 /**
  * Listar todos usuários.
@@ -71,7 +66,7 @@ const listarUsuarios = (callback) => {
     listUserModel((data) => {
         callback(data);
     });
-}
+};
 
 /**
  * Altera dados do usuário.
@@ -85,18 +80,18 @@ const listarUsuarios = (callback) => {
  */
 const alterarUsuario = (id, dadosUsuario, callback) => {
     try {
-        let invalid = userUpdateRole(id, dadosUsuario);
+        let invalid = userSetRole(dadosUsuario);
         if (invalid != null) {
-            return invalid
+            callback(invalid);
         } else {
             updateUserModel(id, dadosUsuario, (data) => {
-                callback(data);
+                callback(undefined, data);
             });
         }
     } catch (er) {
         callback(er);
     }
-}
+};
 
 /**
  * Deleta usuário.
@@ -109,7 +104,7 @@ const deletarUsuario = (id, callback) => {
     deleteUserModel(id, (data) => {
         callback(data);
     });
-}
+};
 
 module.exports = {
     adicionarUsuario: adicionarUsuario,
@@ -117,4 +112,4 @@ module.exports = {
     listarUsuarios: listarUsuarios,
     alterarUsuario: alterarUsuario,
     deletarUsuario: deletarUsuario,
-}
+};
