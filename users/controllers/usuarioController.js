@@ -19,7 +19,7 @@ const deleteUserModel = require('../models/deleteUser');
  * @group Adicionar - Adiciona um usuário caso esteja tudo em conforme.
  * @param {string} nome.query.required - nome do usuário
  * @param {string} dataNascimento.query.required - data de nascimento do usuário.
- * @param {string} Ativo.query.optional - 1 caso ativo, 0 caso inativo. 
+ * @param {string} Ativo.query.optional - 1 caso ativo, 0 caso inativo.
  * @returns {object} 200 - Messagem de sucesso.
  * @returns {Error}  500 - Dados inválidos.
  */
@@ -27,7 +27,7 @@ const adicionarUsuario = (dadosUsuario, callback) => {
     try {
         let invalid = userSetRole(dadosUsuario);
         if (invalid != null) {
-            return invalid
+            return callback(invalid)
         } else {
             setUserModel(dadosUsuario, (data) => {
                 callback(data);

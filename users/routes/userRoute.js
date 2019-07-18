@@ -11,7 +11,7 @@ const userRoutes = (router) => {
                 res.send(data);
             }
         });
-    })
+    });
 
     // FUNCIONANDO - GET BY ID
     router.get('/usuario/:userId', (req, res) => {
@@ -24,18 +24,23 @@ const userRoutes = (router) => {
                 res.send(data);
             }
         });
-    })
+    });
 
     // Adiciona Usuário
     router.post('/usuario', (req, res) => {
         usuarioController.adicionarUsuario(req.body, (err) => {
             console.log('server:' + err);
+
+            let result;
+
             if (err) {
                 res.status(500);
-                res.send(`Erro ao cadastrar o usuário: ${req.body.nome}. Problema: ${err}`);
+                result = err && String(err);
             } else {
-                res.send(`Usuário ${req.body.nome} cadastrado com sucesso.`);
+                result = `Usuário ${req.body.nome} cadastrado com sucesso.`;
             }
+
+            res.end(JSON.stringify(result));
         });
     });
 
@@ -50,7 +55,7 @@ const userRoutes = (router) => {
                 res.send(`Usuário ${req.body.nome} alterado com sucesso.`);
             }
         });
-    })
+    });
 
     //Apaga usuário
     router.delete('/usuario/:userId', (req, res) => {
@@ -65,7 +70,7 @@ const userRoutes = (router) => {
         });
     });
 
-}
+};
 
 
 module.exports = userRoutes;

@@ -7,24 +7,22 @@ const validate = (dadosUsuario) => {
     let preenchimento = verificaPreenchimentoObrigatorio(dadosUsuario);
     if (preenchimento)
         return preenchimento;
-    let regra = verificaRegraNegocio(dadosUsuario)
+    let regra = verificaRegraNegocio(dadosUsuario);
     if (regra)
         return regra;
     return null;
-}
+};
 
 const verificaRegraNegocio = (dadosUsuario) => {
-    let dataNascimento;
-    try {
-        dataNascimento = moment(dadosUsuario.idade, "DD/MM/YYYY");
-    } catch (e) {
+    let dataNascimento = util.parseDate(dadosUsuario.idade);
+    if (!dataNascimento)
         return 'Data de nascimento em formato incorreto.';
-    }
-    let dataAtual = moment(new Date(), "DD/MM/YYYY");
+
+    let dataAtual = moment(new Date(), 'DD/MM/YYYY');
     if (dataAtual.diff(dataNascimento, 'years') < 18)
-        return 'Apostas só são permitidas para pessoas acima de 18 anos.'
+        return 'Apostas só são permitidas para pessoas acima de 18 anos.';
     return null;
-}
+};
 
 const verificaPreenchimentoObrigatorio = (dadosUsuario) => {
     if (util.isEmpty(dadosUsuario))
@@ -34,6 +32,6 @@ const verificaPreenchimentoObrigatorio = (dadosUsuario) => {
     if (util.isEmpty(dadosUsuario.idade))
         return 'Idade não fornecido.';
     return null;
-}
+};
 
 module.exports = validate;
