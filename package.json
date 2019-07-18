@@ -19,9 +19,12 @@
     "moment": "^2.24.0",
     "mongodb": "^3.2.7",
     "popper.js": "^1.14.3",
-    "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master"
+    "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master",
+    "swagger-ui-express": "^4.0.7",
+    "minimist": "*"
   },
   "devDependencies": {
+    "express-swagger-generator": "^1.1.15",
     "nodemon": "^1.19.1"
   }
 }

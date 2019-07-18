@@ -6,9 +6,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const usuarioController = require('../users/controllers/usuarioController');
 const cors = require('cors');
 const app = express();
+const router = express.Router();
+const userRoute = require('../users/routes/userRoute');
+
 
 app.use(cors());
 
@@ -18,72 +20,47 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.render('index.ejs')
 })
 
-// FUNCIONANDO - LISTAGEM GERAL
-app.get('/usuario', (req, res) => {
-    usuarioController.listarUsuarios((data) => {
-        if (!data) {
-            res.status(500);
-            res.send('error');
-        } else {
-            res.send(data);
+userRoute(router);
+
+/** Routes for Swagger */
+
+/** Swagger generator */
+const expressSwagger = require('express-swagger-generator')(app);
+let options = {
+    swaggerDefinition: {
+        info: {
+            description: 'This is a sample server',
+            title: 'Swagger',
+            version: '1.0.0',
+        },
+        host: 'localhost:3000',
+        basePath: '/v1',
+        produces: [
+            "application/json",
+            "application/xml"
+        ],
+        schemes: ['http', 'https'],
+        securityDefinitions: {
+            JWT: {
+                type: 'apiKey',
+                in: 'header',
+                name: 'Authorization',
+                description: "",
+            }
         }
-    });
-})
+    },
+    basedir: __dirname, //app absolute path
+    files: ['../users/controllers/usuarioController.js'] //Path to the API handle folder
+};
+expressSwagger(options)
+/** End Swagger generator */
 
-// FUNCIONANDO - GET BY ID
-app.get('/usuario/:userId', (req, res) => {
-    usuarioController.listarUsuariosPorId(req.params.userId, (data) => {
-        console.log(data);
-        if (!data) {
-            res.status(500);
-            res.send('error');
-        } else {
-            res.send(data);
-        }
-    });
-})
 
-// Adiciona Usuário
-app.post('/usuario', (req, res) => {
-    usuarioController.adicionarUsuario(req.body, (err) => {
-        console.log('server:' + err);
-        if (err) {
-            res.status(500);
-            res.send(`Erro ao cadastrar o usuário: ${req.body.nome}. Problema: ${err}`);
-        } else {
-            res.send(`Usuário ${req.body.nome} cadastrado com sucesso.`);
-        }
-    });
-});
 
-//Edita usuário
-app.put('/usuario/:userId', (req, res) => {
-    usuarioController.alterarUsuario(req.params.userId, req.body, (err) => {
-        if (err) {
-            res.status(500);
-            res.send(`Erro ao alterar o usuário: ${req.body.nome}`);
-
-        } else {
-            res.send(`Usuário ${req.body.nome} alterado com sucesso.`);
-        }
-    });
-})
-
-//Apaga usuário
-app.delete('/usuario/:userId', (req, res) => {
-    usuarioController.deletarUsuario(req.params.userId, (err) => {
-        if (err) {
-            res.status(500);
-            res.send(`Erro ao excluir o usuário de ID = ${req.params.userId}`);
-
-        } else {
-            res.send(`Usuário de ID = ${req.params.userId} excluído com sucesso.`);
-        }
-    });
-});
-
+/** End Routes for Swagger */
+app.use(router)
 app.listen(3000);
