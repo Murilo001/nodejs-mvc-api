@@ -1,6 +1,6 @@
 /**
  * Base em MVC criada para quaisquer outros projetos.
- * 
+ *
  * @author Murilo de Oliveira Silva.
  */
 const express = require('express');
@@ -16,13 +16,13 @@ app.use(cors());
 
 app.set('engine', 'ejs');
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
 
 router.get('/', (req, res) => {
-    res.render('index.ejs')
-})
+    res.render('index.ejs');
+});
 
 userRoute(router);
 
@@ -38,8 +38,8 @@ let options = {
         host: 'localhost:3000',
         basePath: '/v1',
         produces: [
-            "application/json",
-            "application/xml"
+            'application/json',
+            'application/xml',
         ],
         schemes: ['http', 'https'],
         securityDefinitions: {
@@ -47,15 +47,15 @@ let options = {
                 type: 'apiKey',
                 in: 'header',
                 name: 'Authorization',
-                description: "",
-            }
-        }
+                description: '',
+            },
+        },
     },
     basedir: __dirname, //app absolute path
-    files: ['../users/controllers/usuarioController.js'] //Path to the API handle folder
+    files: ['../users/controllers/usuarioController.js'], //Path to the API handle folder
 };
-expressSwagger(options)
+expressSwagger(options);
 /** End Swagger generator */
 
-app.use(router)
+app.use(router);
 app.listen(3000);
