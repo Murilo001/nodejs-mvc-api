@@ -46,9 +46,18 @@ const adicionarUsuario = (dadosUsuario, callback) => {
  * @returns {Error}  500 - Dados inválidos.
  */
 const listarUsuariosPorId = (id, callback) => {
-    getUserModel(id, (data) => {
-        callback(data);
-    });
+    try {
+        let invalid = userGetRole(id);
+        if (invalid != null) {
+            return invalid
+        } else {
+            getUserModel(id, (data) => {
+                callback(data);
+            });
+        }
+    } catch (er) {
+        callback(er);
+    }
 }
 
 /**
@@ -75,9 +84,18 @@ const listarUsuarios = (callback) => {
  * @returns {Error}  500 - Dados inválidos.
  */
 const alterarUsuario = (id, dadosUsuario, callback) => {
-    updateUserModel(id, dadosUsuario, (data) => {
-        callback(data);
-    });
+    try {
+        let invalid = userUpdateRole(id, dadosUsuario);
+        if (invalid != null) {
+            return invalid
+        } else {
+            updateUserModel(id, dadosUsuario, (data) => {
+                callback(data);
+            });
+        }
+    } catch (er) {
+        callback(er);
+    }
 }
 
 /**

@@ -1,11 +1,11 @@
 const db = require('../../repositories/db')
 
 function listarUsuario(callback) {
-  let sql = `SELECT DISTINCT id,
+  let sql = `SELECT id,
                   nome, idade, ativo
            FROM usuario
            WHERE ativo = 1
-           ORDER BY nome`;
+           ORDER BY id`;
 
   db.all(sql, [], (err, row) => {
     if (err) {
