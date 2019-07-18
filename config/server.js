@@ -25,10 +25,11 @@ app.get('/', (req, res) => {
 // FUNCIONANDO - LISTAGEM GERAL
 app.get('/usuario', (req, res) => {
     usuarioController.listarUsuarios((data) => {
-        if (data) {
-            res.send(data);
-        } else {
+        if (!data) {
+            res.status(500);
             res.send('error');
+        } else {
+            res.send(data);
         }
     });
 })
@@ -36,10 +37,12 @@ app.get('/usuario', (req, res) => {
 // FUNCIONANDO - GET BY ID
 app.get('/usuario/:userId', (req, res) => {
     usuarioController.listarUsuariosPorId(req.params.userId, (data) => {
-        if (data) {
-            res.send(data);
-        } else {
+        console.log(data);
+        if (!data) {
+            res.status(500);
             res.send('error');
+        } else {
+            res.send(data);
         }
     });
 })
@@ -47,9 +50,10 @@ app.get('/usuario/:userId', (req, res) => {
 // Adiciona Usuário
 app.post('/usuario', (req, res) => {
     usuarioController.adicionarUsuario(req.body, (err) => {
+        console.log('server:' + err);
         if (err) {
+            res.status(500);
             res.send(`Erro ao cadastrar o usuário: ${req.body.nome}. Problema: ${err}`);
-
         } else {
             res.send(`Usuário ${req.body.nome} cadastrado com sucesso.`);
         }
@@ -60,6 +64,7 @@ app.post('/usuario', (req, res) => {
 app.put('/usuario/:userId', (req, res) => {
     usuarioController.alterarUsuario(req.params.userId, req.body, (err) => {
         if (err) {
+            res.status(500);
             res.send(`Erro ao alterar o usuário: ${req.body.nome}`);
 
         } else {
@@ -72,6 +77,7 @@ app.put('/usuario/:userId', (req, res) => {
 app.delete('/usuario/:userId', (req, res) => {
     usuarioController.deletarUsuario(req.params.userId, (err) => {
         if (err) {
+            res.status(500);
             res.send(`Erro ao excluir o usuário de ID = ${req.params.userId}`);
 
         } else {

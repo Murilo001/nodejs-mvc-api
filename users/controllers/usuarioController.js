@@ -1,7 +1,9 @@
-/** Common Functions */
-const util = require('../../common/util');
-/** End Common Function */
-const moment = require('moment');
+/** Business Role Functions */
+const userSetRole = require('../roles/userSetRole');
+const userGetRole = require('../roles/userGetRoleController');
+const userUpdateRole = require('../roles/userUpdateRoleController');
+const userDeleteRole = require('../roles/userDeleteRoleController');
+/** End Business Role Functions */
 
 /** Model Functions */
 const setUserModel = require('../models/setUser');
@@ -13,9 +15,9 @@ const deleteUserModel = require('../models/deleteUser');
 
 const adicionarUsuario = (dadosUsuario, callback) => {
     try {
-        let validacao = validarDados(dadosUsuario);
-        if (validacao) {
-            callback(validacao);
+        let invalid = userSetRole(dadosUsuario);
+        if (invalid != null) {
+            return invalid
         } else {
             setUserModel(dadosUsuario, (data) => {
                 callback(data);
@@ -25,41 +27,6 @@ const adicionarUsuario = (dadosUsuario, callback) => {
         callback(er);
     }
 }
-
-/** Regras de Negócio de Adicionar Usuário */
-const validarDados = (dadosUsuario) => {
-    let preenchimento = verificaPreenchimentoObrigatorio(dadosUsuario);
-    if (preenchimento)
-        return preenchimento;
-    let regra = verificaRegraNegocio(dadosUsuario)
-    if (regra)
-        return regra;
-    return null;
-}
-
-const verificaRegraNegocio = (dadosUsuario) => {
-    let dataNascimento;
-    try {
-        dataNascimento = moment(dadosUsuario.idade, "DD/MM/YYYY");
-    } catch (e) {
-        return 'Data de nascimento em formato incorreto.';
-    }
-    let dataAtual = moment(new Date(), "DD/MM/YYYY");
-    if (dataAtual.diff(dataNascimento, 'years') < 18)
-        return 'Apostas só são permitidas para pessoas acima de 18 anos.'
-    return null;
-}
-
-const verificaPreenchimentoObrigatorio = (dadosUsuario) => {
-    if (util.isEmpty(dadosUsuario))
-        return 'Dados não fornecidos.';
-    if (util.isEmpty(dadosUsuario.nome))
-        return 'Nome não fornecido.';
-    if (util.isEmpty(dadosUsuario.idade))
-        return 'Idade não fornecido.';
-    return null;
-}
-/** FIM Regras de Negócio de Adicionar Usuário */
 
 const listarUsuariosPorId = (id, callback) => {
     getUserModel(id, (data) => {
