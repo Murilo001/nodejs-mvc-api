@@ -46,26 +46,31 @@ const userRoutes = (router) => {
     //Edita usuário
     router.put('/usuario/:userId', (req, res) => {
         usuarioController.alterarUsuario(req.params.userId, req.body, (err) => {
+            let result;
             if (err) {
                 res.status(500);
-                res.send(`Erro ao alterar o usuário: ${req.body.nome}`);
-
+                result = `Erro ao alterar o usuário: ${req.body.nome}`;
             } else {
-                res.send(`Usuário ${req.body.nome} alterado com sucesso.`);
+                result = `Usuário ${req.body.nome} alterado com sucesso.`;
             }
+
+            res.end(JSON.stringify(result));
         });
     });
 
     //Apaga usuário
     router.delete('/usuario/:userId', (req, res) => {
-        usuarioController.deletarUsuario(req.params.userId, (err) => {
+        usuarioController.deletarUsuario(req.params.userId, (err, data) => {
+            let result;
+
             if (err) {
                 res.status(500);
-                res.send(`Erro ao excluir o usuário de ID = ${req.params.userId}`);
-
+                result = `Erro ao excluir o usuário de ID = ${req.params.userId}`;
             } else {
-                res.send(`Usuário de ID = ${req.params.userId} excluído com sucesso.`);
+                result = `Usuário de ID = ${req.params.userId} excluído com sucesso.`;
             }
+
+            res.end(JSON.stringify(result));
         });
     });
 

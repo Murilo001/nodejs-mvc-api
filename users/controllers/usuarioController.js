@@ -84,8 +84,8 @@ const alterarUsuario = (id, dadosUsuario, callback) => {
         if (invalid != null) {
             callback(invalid);
         } else {
-            updateUserModel(id, dadosUsuario, (data) => {
-                callback(undefined, data);
+            updateUserModel(id, dadosUsuario, (err, data) => {
+                callback(err, data);
             });
         }
     } catch (er) {
@@ -101,8 +101,8 @@ const alterarUsuario = (id, dadosUsuario, callback) => {
  * @returns {Error}  500 - Dados inválidos.
  */
 const deletarUsuario = (id, callback) => {
-    deleteUserModel(id, (data) => {
-        callback(data);
+    deleteUserModel(id, (err, data) => {
+        callback(err, data);
     });
 };
 
