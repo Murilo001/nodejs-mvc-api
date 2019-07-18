@@ -13,6 +13,16 @@ const updateUserModel = require('../models/updateUser');
 const deleteUserModel = require('../models/deleteUser');
 /** End Model Functions */
 
+/**
+ * Adicionar usuário.
+ * @route POST /usuario
+ * @group Adicionar - Adiciona um usuário caso esteja tudo em conforme.
+ * @param {string} nome.query.required - nome do usuário
+ * @param {string} dataNascimento.query.required - data de nascimento do usuário.
+ * @param {string} Ativo.query.optional - 1 caso ativo, 0 caso inativo. 
+ * @returns {object} 200 - Messagem de sucesso.
+ * @returns {Error}  500 - Dados inválidos.
+ */
 const adicionarUsuario = (dadosUsuario, callback) => {
     try {
         let invalid = userSetRole(dadosUsuario);
@@ -28,24 +38,55 @@ const adicionarUsuario = (dadosUsuario, callback) => {
     }
 }
 
+/**
+ * Listar usuário por ID.
+ * @route GET /usuario/id
+ * @group Listar por ID - Lista informações do usuário pego pelo ID.
+ * @returns {object} 200 - JSON com dados do usuário.
+ * @returns {Error}  500 - Dados inválidos.
+ */
 const listarUsuariosPorId = (id, callback) => {
     getUserModel(id, (data) => {
         callback(data);
     });
 }
 
+/**
+ * Listar todos usuários.
+ * @route GET /usuario
+ * @group Listar todos - Lista todos os usuários ativos.
+ * @returns {object} 200 - JSON com dados do usuário.
+ * @returns {Error}  500 - Dados inválidos.
+ */
 const listarUsuarios = (callback) => {
     listUserModel((data) => {
         callback(data);
     });
 }
 
+/**
+ * Altera dados do usuário.
+ * @route PUT /usuario
+ * @group Altera dados - Altera dados de um usuário.
+ * @param {string} nome.query.required - nome do usuário
+ * @param {string} dataNascimento.query.required - data de nascimento do usuário.
+ * @param {string} Ativo.query.optional - 1 caso ativo, 0 caso inativo.
+ * @returns {object} 200 - Messagem de sucesso.
+ * @returns {Error}  500 - Dados inválidos.
+ */
 const alterarUsuario = (id, dadosUsuario, callback) => {
     updateUserModel(id, dadosUsuario, (data) => {
         callback(data);
     });
 }
 
+/**
+ * Deleta usuário.
+ * @route DELETE /usuario/id
+ * @group Deleta Usuário - Deleta um usuário.
+ * @returns {object} 200 - Messagem de sucesso.
+ * @returns {Error}  500 - Dados inválidos.
+ */
 const deletarUsuario = (id, callback) => {
     deleteUserModel(id, (data) => {
         callback(data);

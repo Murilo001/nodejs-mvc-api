@@ -26,8 +26,6 @@ router.get('/', (req, res) => {
 
 userRoute(router);
 
-/** Routes for Swagger */
-
 /** Swagger generator */
 const expressSwagger = require('express-swagger-generator')(app);
 let options = {
@@ -59,8 +57,5 @@ let options = {
 expressSwagger(options)
 /** End Swagger generator */
 
-
-
-/** End Routes for Swagger */
 app.use(router)
 app.listen(3000);
