@@ -1,0 +1,19 @@
+<form class="form" [formGroup]="formGroup" (ngSubmit)="submitForm()">
+  <mat-form-field class="form__field">
+    <input type="text" formControlName="nome" placeholder="Nome" matInput />
+  </mat-form-field>
+
+  <mat-form-field class="form__field">
+    <input
+      type="text"
+      placeholder="Data de nascimento"
+      formControlName="idade"
+      matInput
+      [matDatepicker]="dp"
+    />
+    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+    <mat-datepicker #dp></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Salvar</button>
+</form>

@@ -1,0 +1,24 @@
+<div>
+  <a routerLink="create" mat-raised-button color="primary">
+    <mat-icon>add</mat-icon>
+    Novo
+  </a>
+</div>
+
+<mat-card class="card">
+  <mat-nav-list>
+    <mat-list-item *ngIf="usuarios.length === 0">Nenhum usuário</mat-list-item>
+
+    <mat-list-item *ngFor="let usuario of usuarios">
+      <span matLine>{{ usuario.nome }}</span>
+
+      <button mat-icon-button (click)="editar(usuario.id)">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="apagar(usuario.id)">
+        <mat-icon color="warn">delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-nav-list>
+</mat-card>
