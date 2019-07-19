@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 export interface TransienteUsuario {
   nome: string;
@@ -17,7 +18,7 @@ export interface Usuario extends ApiUsuario {
   idade: Date;
 }
 
-const base = '//localhost:3000';
+const base = environment;
 
 @Injectable({
   providedIn: 'root',

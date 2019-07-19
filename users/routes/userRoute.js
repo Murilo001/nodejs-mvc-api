@@ -28,8 +28,6 @@ const userRoutes = (router) => {
     // Adiciona Usuário
     router.post('/usuario', (req, res) => {
         usuarioController.adicionarUsuario(req.body, (err) => {
-            console.log('server:' + err);
-
             let result;
 
             if (err) {
