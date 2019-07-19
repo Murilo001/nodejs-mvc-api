@@ -20,10 +20,10 @@ const verificaRegraNegocio = (dadosUsuario) => {
 
     let dataAtual = moment(new Date(), 'DD/MM/YYYY');
     if (dataAtual.diff(dataNascimento, 'years') < 18)
-        return 'Apostas só são permitidas para pessoas acima de 18 anos.'
+        return 'Apostas só são permitidas para pessoas acima de 18 anos.';
 
-    if (dadosUsuario.ativo !== '1' && dadosUsuario.ativo !== '0')
-        return 'Campo Ativo preenchido incorretamente, informe 0 para inativo e 1 para ativo.'
+    if (Number(dadosUsuario.ativo) !== 1 && Number(dadosUsuario.ativo) !== 0)
+        return 'Campo Ativo preenchido incorretamente, informe 0 para inativo e 1 para ativo.';
 
     return null;
 };

@@ -103,11 +103,11 @@ const alterarUsuario = (id, dadosUsuario, callback) => {
 const deletarUsuario = (id, callback) => {
     try {
         let invalid = userDeleteRole(id);
-        if (invalid != null) {
-            return invalid;
+        if (invalid) {
+            return callback(invalid);
         } else {
-            deleteUserModel(id, (data) => {
-                callback(data);
+            deleteUserModel(id, (err, data) => {
+                callback(err, data);
             });
         }
     } catch (er) {
