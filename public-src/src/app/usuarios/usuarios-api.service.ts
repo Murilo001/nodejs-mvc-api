@@ -17,7 +17,7 @@ export interface Usuario extends ApiUsuario {
   idade: Date;
 }
 
-const base = '/';
+const base = location.origin;
 
 @Injectable({
   providedIn: 'root',
