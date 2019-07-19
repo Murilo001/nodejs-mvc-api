@@ -14,15 +14,9 @@ const userRoute = require('../users/routes/userRoute');
 
 app.use(cors());
 
-app.set('engine', 'ejs');
-
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 app.use(bodyParser.json());
-
-router.get('/', (req, res) => {
-    res.render('index.ejs');
-});
 
 userRoute(router);
 
@@ -58,4 +52,8 @@ expressSwagger(options);
 /** End Swagger generator */
 
 app.use(router);
-app.listen(3000);
+
+const porta = 3000;
+
+console.log(`Servidor iniciado na porta ${porta}`)
+app.listen(porta);

@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "build:frontend": "rm -rf public && mkdir public && (cd public-src && npm run build -- --prod && cp -r dist/torneios/* ../public)",
     "dev": "nodemon config/server.js"
   },
   "author": "",
