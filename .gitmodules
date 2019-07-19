@@ -1,0 +1,3 @@
+[submodule "torneios"]
+	path = torneios
+	url = git@github.com:Murilo001/torneios.git
